@@ -4,16 +4,8 @@
 //
 //  Created by Samuel Sajeev on 14/08/26.
 //
+//  NOTE: This file is intentionally left empty.
+//  The app entry point is HomeViewController, wired in SceneDelegate.
+//
 
 import UIKit
-
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-
-
-}
-
