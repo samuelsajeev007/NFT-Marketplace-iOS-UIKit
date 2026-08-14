@@ -91,18 +91,18 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Jane Cooper" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="S2-nl" userLabel="Name Label">
-                                        <rect key="frame" x="20" y="77" width="321" height="33.666666666666657"/>
+                                        <rect key="frame" x="20" y="79" width="321" height="33.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="24"/>
                                         <color key="textColor" red="0.066000000000000003" green="0.078" blue="0.109" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.77249999999999996" green="0.82350000000000001" blue="0.97650000000000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="S2-av" firstAttribute="leading" secondItem="S2-pc" secondAttribute="leading" constant="20" id="S2-c020"/>
                                     <constraint firstItem="S2-av" firstAttribute="top" secondItem="S2-pc" secondAttribute="top" constant="41" id="S2-c021"/>
                                     <constraint firstItem="S2-nl" firstAttribute="leading" secondItem="S2-pc" secondAttribute="leading" constant="20" id="S2-c022"/>
-                                    <constraint firstItem="S2-nl" firstAttribute="top" secondItem="S2-av" secondAttribute="bottom" constant="8" id="S2-c023"/>
+                                    <constraint firstItem="S2-nl" firstAttribute="top" secondItem="S2-av" secondAttribute="bottom" constant="10" id="S2-c023"/>
                                     <constraint firstItem="S2-nl" firstAttribute="trailing" secondItem="S2-pc" secondAttribute="trailing" constant="-20" id="S2-c024"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>

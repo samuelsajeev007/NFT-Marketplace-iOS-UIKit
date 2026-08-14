@@ -30,6 +30,8 @@ final class HomeViewController: UIViewController {
 
     private let profileGradientLayer = CAGradientLayer()
     private let dotPatternLayer = CALayer()
+    private let dotMaskLayer = CAGradientLayer()
+    private var lastDotSize: CGSize = .zero
     private var selectedTab: HomeTab = .marketplace
 
     // MARK: - Child VCs
@@ -60,16 +62,16 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if let profileCardView {
-            profileGradientLayer.frame = profileCardView.bounds
+        guard let profileCardView, profileCardView.bounds.width > 0, profileCardView.bounds.height > 0 else { return }
+        let bounds = profileCardView.bounds
 
-            if dotPatternLayer.superlayer == nil && profileCardView.bounds.width > 0 {
-                let dotImage = makeDotPatternImage(size: profileCardView.bounds.size)
-                dotPatternLayer.contents = dotImage?.cgImage
-                dotPatternLayer.frame = profileCardView.bounds
-                dotPatternLayer.opacity = 0.4
-                profileCardView.layer.insertSublayer(dotPatternLayer, above: profileGradientLayer)
-            }
+        profileGradientLayer.frame = bounds
+        dotPatternLayer.frame = bounds
+        dotMaskLayer.frame = bounds
+
+        if dotPatternLayer.contents == nil || lastDotSize != bounds.size {
+            lastDotSize = bounds.size
+            dotPatternLayer.contents = makeDotPatternImage(size: bounds.size)?.cgImage
         }
     }
 
@@ -88,13 +90,29 @@ final class HomeViewController: UIViewController {
             profileCardView.layer.cornerRadius = 10
             profileCardView.clipsToBounds = true
 
-            profileGradientLayer.colors = [
-                UIColor.profileCardGradientStart.withAlphaComponent(0.28).cgColor,
-                UIColor.profileCardGradientEnd.withAlphaComponent(0.28).cgColor
-            ]
+            // LinearGradient (75, 90, 252) -> (156, 66, 254) with 0.28 opacity
+            let startColor = UIColor(red: 75/255.0, green: 90/255.0, blue: 252/255.0, alpha: 0.28).cgColor
+            let endColor   = UIColor(red: 156/255.0, green: 66/255.0, blue: 254/255.0, alpha: 0.28).cgColor
+
+            profileGradientLayer.colors = [startColor, endColor]
             profileGradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
             profileGradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
-            profileCardView.layer.insertSublayer(profileGradientLayer, at: 0)
+            if profileGradientLayer.superlayer == nil {
+                profileCardView.layer.insertSublayer(profileGradientLayer, at: 0)
+            }
+
+            // Dot mask: .white to .white.opacity(0.3), topLeading to bottomTrailing
+            dotMaskLayer.colors = [
+                UIColor.white.cgColor,
+                UIColor.white.withAlphaComponent(0.3).cgColor
+            ]
+            dotMaskLayer.startPoint = CGPoint(x: 0, y: 0)
+            dotMaskLayer.endPoint = CGPoint(x: 1, y: 1)
+            dotPatternLayer.mask = dotMaskLayer
+
+            if dotPatternLayer.superlayer == nil {
+                profileCardView.layer.insertSublayer(dotPatternLayer, above: profileGradientLayer)
+            }
         }
 
         if let nameLabel {
@@ -210,20 +228,18 @@ final class HomeViewController: UIViewController {
 
     private func makeDotPatternImage(size: CGSize) -> UIImage? {
         guard size.width > 0 && size.height > 0 else { return nil }
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { _ in
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = UIScreen.main.scale
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
+        return renderer.image { ctx in
             let step: CGFloat = 8
             let dotSize: CGFloat = 2
             UIColor.white.withAlphaComponent(0.4).setFill()
-            var x: CGFloat = 0
-            while x <= size.width {
-                var y: CGFloat = 0
-                while y <= size.height {
+            for x in stride(from: 0, through: size.width, by: step) {
+                for y in stride(from: 0, through: size.height, by: step) {
                     let rect = CGRect(x: x, y: y, width: dotSize, height: dotSize)
-                    UIBezierPath(rect: rect).fill()
-                    y += step
+                    ctx.cgContext.fill(rect)
                 }
-                x += step
             }
         }
     }
