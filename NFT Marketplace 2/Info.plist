@@ -19,6 +19,8 @@
 		<string>SpaceGrotesk-Medium.otf</string>
 		<string>SpaceGrotesk-Regular.otf</string>
 		<string>SpaceGrotesk-SemiBold.otf</string>
+		<string>manrope.medium.otf</string>
+		<string>manrope.regular.otf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photos to let you select an NFT image.</string>

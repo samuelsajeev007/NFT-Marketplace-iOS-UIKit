@@ -92,7 +92,7 @@ final class CreateNFTViewController: UIViewController {
             backButton.clipsToBounds = true
         }
 
-        headerTitleLabel?.font = UIFont(name: "Poppins-Medium", size: 24) ?? UIFont.boldSystemFont(ofSize: 24)
+        headerTitleLabel?.font = UIFont(name: "SofiaProMedium", size: 24) ?? UIFont.systemFont(ofSize: 24, weight: .medium)
         headerTitleLabel?.textColor = UIColor(red: 17/255.0, green: 20/255.0, blue: 28/255.0, alpha: 1.0)
 
         // Image Picker Container
@@ -112,36 +112,42 @@ final class CreateNFTViewController: UIViewController {
             uploadIconImageView.tintColor = UIColor(red: 142/255.0, green: 142/255.0, blue: 147/255.0, alpha: 1.0)
         }
 
-        uploadTitleLabel?.font = UIFont(name: "Poppins-Medium", size: 16) ?? UIFont.boldSystemFont(ofSize: 16)
+        uploadTitleLabel?.font = UIFont(name: "Manrope-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14, weight: .medium)
         uploadTitleLabel?.textColor = UIColor(red: 23/255.0, green: 24/255.0, blue: 22/255.0, alpha: 1.0)
 
-        uploadSubtitleLabel?.font = UIFont(name: "Poppins-Regular", size: 12) ?? UIFont.systemFont(ofSize: 12)
+        uploadSubtitleLabel?.font = UIFont(name: "Manrope-Regular", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .regular)
         uploadSubtitleLabel?.textColor = UIColor(red: 151/255.0, green: 151/255.0, blue: 150/255.0, alpha: 1.0)
 
         selectedImageView?.layer.cornerRadius = 16
         selectedImageView?.clipsToBounds = true
 
         // Form Labels
-        titleLabel?.font = UIFont(name: "Poppins-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let barBorderColor = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.30).cgColor
+        let regularFont12 = UIFont(name: "Manrope-Regular", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .regular)
+        let mediumFont14 = UIFont(name: "Manrope-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14, weight: .medium)
+        let placeholderColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)
+
+        titleLabel?.font = mediumFont14
         titleLabel?.textColor = .black
 
-        descLabel?.font = UIFont(name: "Poppins-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14)
+        descLabel?.font = mediumFont14
         descLabel?.textColor = .black
 
-        priceLabel?.font = UIFont(name: "Poppins-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14)
+        priceLabel?.font = mediumFont14
         priceLabel?.textColor = .black
 
-        currencyLabel?.font = UIFont(name: "Poppins-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14)
+        currencyLabel?.font = mediumFont14
         currencyLabel?.textColor = .black
+        currencyLabel?.textAlignment = .right
 
         // Title Field
         if let titleTextField {
-            titleTextField.font = UIFont(name: "Poppins-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14)
+            titleTextField.font = regularFont12
             titleTextField.textColor = .black
             titleTextField.backgroundColor = .white
             titleTextField.layer.cornerRadius = 8
             titleTextField.layer.borderWidth = 1
-            titleTextField.layer.borderColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 234/255.0, alpha: 1.0).cgColor
+            titleTextField.layer.borderColor = barBorderColor
             titleTextField.clipsToBounds = true
 
             let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 48))
@@ -149,25 +155,28 @@ final class CreateNFTViewController: UIViewController {
             titleTextField.leftViewMode = .always
             titleTextField.attributedPlaceholder = NSAttributedString(
                 string: "Enter the Nft name",
-                attributes: [.foregroundColor: UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)]
+                attributes: [
+                    .font: regularFont12,
+                    .foregroundColor: placeholderColor
+                ]
             )
         }
 
         // Description TextView
         if let descTextView {
-            descTextView.font = UIFont(name: "Poppins-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14)
+            descTextView.font = regularFont12
             descTextView.textColor = .black
             descTextView.backgroundColor = .white
             descTextView.layer.cornerRadius = 8
             descTextView.layer.borderWidth = 1
-            descTextView.layer.borderColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 234/255.0, alpha: 1.0).cgColor
+            descTextView.layer.borderColor = barBorderColor
             descTextView.textContainerInset = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
             descTextView.delegate = self
             descTextView.clipsToBounds = true
 
             descPlaceholderLabel.text = "Enter"
-            descPlaceholderLabel.font = UIFont(name: "Poppins-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14)
-            descPlaceholderLabel.textColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)
+            descPlaceholderLabel.font = regularFont12
+            descPlaceholderLabel.textColor = placeholderColor
             descPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
             descTextView.addSubview(descPlaceholderLabel)
 
@@ -182,16 +191,19 @@ final class CreateNFTViewController: UIViewController {
             priceContainerView.backgroundColor = .white
             priceContainerView.layer.cornerRadius = 8
             priceContainerView.layer.borderWidth = 1
-            priceContainerView.layer.borderColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 234/255.0, alpha: 1.0).cgColor
+            priceContainerView.layer.borderColor = barBorderColor
             priceContainerView.clipsToBounds = true
         }
 
         if let priceTextField {
-            priceTextField.font = UIFont(name: "Poppins-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14)
+            priceTextField.font = regularFont12
             priceTextField.textColor = .black
             priceTextField.attributedPlaceholder = NSAttributedString(
                 string: "Enter the amount",
-                attributes: [.foregroundColor: UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)]
+                attributes: [
+                    .font: regularFont12,
+                    .foregroundColor: placeholderColor
+                ]
             )
         }
 
