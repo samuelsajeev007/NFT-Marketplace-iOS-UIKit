@@ -9,14 +9,17 @@ import Foundation
 
 // MARK: - MarketplaceRepositoryProtocol
 
+/// Contract for all marketplace data operations strictly via API.
 protocol MarketplaceRepositoryProtocol {
     func fetchNFTs(page: Int, pageSize: Int) async throws -> [NFT]
     func fetchNFTDetail(id: String) async throws -> NFT
     func purchaseNFT(id: String, userId: String, email: String) async throws
+    func purchaseNFT(nft: NFT, userId: String, email: String) async throws
 }
 
 // MARK: - MarketplaceRepository
 
+/// Pure API implementation of MarketplaceRepositoryProtocol.
 final class MarketplaceRepository: MarketplaceRepositoryProtocol {
 
     private let networkService: NetworkServiceProtocol
@@ -26,47 +29,28 @@ final class MarketplaceRepository: MarketplaceRepositoryProtocol {
     }
 
     func fetchNFTs(page: Int, pageSize: Int) async throws -> [NFT] {
-        do {
-            let response = try await networkService.request(
-                endpoint: .listNFTs,
-                responseType: NFTResponse.self
-            )
-            if !response.items.isEmpty {
-                return response.items
-            }
-        } catch {
-            print("Remote fetch failed with error: \(error). Using fallback dataset.")
-        }
-        return MockData.sampleNFTs
+        let response = try await networkService.request(
+            endpoint: .listNFTs,
+            responseType: NFTResponse.self
+        )
+        return response.items
     }
 
     func fetchNFTDetail(id: String) async throws -> NFT {
-        do {
-            return try await networkService.request(
-                endpoint: .nftDetail(id: id),
-                responseType: NFT.self
-            )
-        } catch {
-            if let mock = MockData.sampleNFTs.first(where: { $0.id == id }) {
-                return mock
-            }
-            if let owned = MockData.ownedNFTs.first(where: { $0.id == id }) {
-                return owned
-            }
-            throw error
-        }
+        try await networkService.request(
+            endpoint: .nftDetail(id: id),
+            responseType: NFT.self
+        )
     }
 
     func purchaseNFT(id: String, userId: String, email: String) async throws {
-        do {
-            _ = try await networkService.request(
-                endpoint: .purchaseNFT(nftID: id, userId: userId, email: email),
-                responseType: EmptyResponse.self
-            )
-            MockData.recordPurchase(id: id)
-        } catch {
-            print("Remote purchase error: \(error). Recording purchase in local storage.")
-            MockData.recordPurchase(id: id)
-        }
+        _ = try await networkService.request(
+            endpoint: .purchaseNFT(nftID: id, userId: userId, email: email),
+            responseType: EmptyResponse.self
+        )
+    }
+
+    func purchaseNFT(nft: NFT, userId: String, email: String) async throws {
+        try await purchaseNFT(id: nft.id, userId: userId, email: email)
     }
 }

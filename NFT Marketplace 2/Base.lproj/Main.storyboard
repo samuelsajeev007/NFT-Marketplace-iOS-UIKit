@@ -70,18 +70,18 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2-av" userLabel="Avatar Container">
                                         <rect key="frame" x="20" y="41" width="28" height="28"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="oze-Rt-TLl">
-                                                <rect key="frame" x="5" y="5" width="18" height="18"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personalImage" translatesAutoresizingMaskIntoConstraints="NO" id="oze-Rt-TLl">
+                                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="0.50756492077464788" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="oze-Rt-TLl" secondAttribute="trailing" constant="5" id="4Ka-EE-AMg"/>
-                                            <constraint firstItem="oze-Rt-TLl" firstAttribute="leading" secondItem="S2-av" secondAttribute="leading" constant="5" id="Ed7-hr-xkH"/>
+                                            <constraint firstAttribute="trailing" secondItem="oze-Rt-TLl" secondAttribute="trailing" id="4Ka-EE-AMg"/>
+                                            <constraint firstItem="oze-Rt-TLl" firstAttribute="leading" secondItem="S2-av" secondAttribute="leading" id="Ed7-hr-xkH"/>
                                             <constraint firstAttribute="width" constant="28" id="S2-c010"/>
                                             <constraint firstAttribute="height" constant="28" id="S2-c011"/>
-                                            <constraint firstItem="oze-Rt-TLl" firstAttribute="top" secondItem="S2-av" secondAttribute="top" constant="5" id="dWE-1Q-DwX"/>
-                                            <constraint firstAttribute="bottom" secondItem="oze-Rt-TLl" secondAttribute="bottom" constant="5" id="iXu-Ol-t5W"/>
+                                            <constraint firstItem="oze-Rt-TLl" firstAttribute="top" secondItem="S2-av" secondAttribute="top" id="dWE-1Q-DwX"/>
+                                            <constraint firstAttribute="bottom" secondItem="oze-Rt-TLl" secondAttribute="bottom" id="iXu-Ol-t5W"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -713,77 +713,131 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-sv" userLabel="Sheet View">
-                                <rect key="frame" x="0.0" y="440" width="393" height="412"/>
+                                <rect key="frame" x="0.0" y="394" width="393" height="458"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-gr" userLabel="Grabber">
-                                        <rect key="frame" x="176.66666666666666" y="12" width="40" height="5"/>
-                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-hv" userLabel="Header View">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="58"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Confirm Your Purchase" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8-ht" userLabel="Header Title">
+                                                <rect key="frame" x="91.000000000000014" y="16.333333333333314" width="211.33333333333337" height="25.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-cb" userLabel="Close Button">
+                                                <rect key="frame" x="333" y="7" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="44" id="S8-c001"/>
+                                                    <constraint firstAttribute="height" constant="44" id="S8-c002"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="xmark" catalog="system"/>
+                                                <connections>
+                                                    <action selector="closeTapped:" destination="S8-vc" eventType="touchUpInside" id="S8-act002"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="58" id="S8-c003"/>
+                                            <constraint firstItem="S8-ht" firstAttribute="centerX" secondItem="S8-hv" secondAttribute="centerX" id="S8-c004"/>
+                                            <constraint firstItem="S8-ht" firstAttribute="centerY" secondItem="S8-hv" secondAttribute="centerY" id="S8-c005"/>
+                                            <constraint firstAttribute="trailing" secondItem="S8-cb" secondAttribute="trailing" constant="16" id="S8-c006"/>
+                                            <constraint firstItem="S8-cb" firstAttribute="centerY" secondItem="S8-hv" secondAttribute="centerY" id="S8-c007"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-sdiv" userLabel="Header Divider">
+                                        <rect key="frame" x="0.0" y="58" width="393" height="1"/>
+                                        <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="S8-c008"/>
+                                        </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S8-nt" userLabel="NFT Thumbnail">
-                                        <rect key="frame" x="20" y="37" width="56" height="56"/>
+                                        <rect key="frame" x="20" y="79" width="60" height="60"/>
                                         <color key="backgroundColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="S8-c009"/>
+                                            <constraint firstAttribute="height" constant="60" id="S8-c010"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="8"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="NFT Title" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-tl">
-                                        <rect key="frame" x="88" y="37" width="285" height="22.666666666666671"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="NFT Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8-tl" userLabel="NFT Title">
+                                        <rect key="frame" x="96" y="85" width="277" height="22.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Theresa Webb" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-cl">
-                                        <rect key="frame" x="88" y="63.666666666666679" width="101" height="19.666666666666664"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personIcon" translatesAutoresizingMaskIntoConstraints="NO" id="S8-ci" userLabel="Creator Icon">
+                                        <rect key="frame" x="96" y="112" width="12" height="12"/>
+                                        <color key="tintColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="12" id="S8-c011"/>
+                                            <constraint firstAttribute="height" constant="12" id="S8-c012"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Theresa Webb" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-cl" userLabel="Creator Label">
+                                        <rect key="frame" x="112" y="108.33333333333331" width="261" height="19.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
-                                        <color key="textColor" red="0.59199999999999997" green="0.59199999999999997" blue="0.58799999999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-d1" userLabel="Dashed Line 1">
-                                        <rect key="frame" x="20" y="113" width="353" height="1"/>
-                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="20" y="159" width="353" height="1"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="S8-c013"/>
+                                        </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Buying Price" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-bpt">
-                                        <rect key="frame" x="20" y="134" width="85" height="19.666666666666657"/>
+                                        <rect key="frame" x="20" y="176" width="85" height="19.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
-                                        <color key="textColor" red="0.59199999999999997" green="0.59199999999999997" blue="0.58799999999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="0.00 USDT" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-bpv">
-                                        <rect key="frame" x="20.000000000000007" y="161.66666666666663" width="90.666666666666686" height="25.333333333333343"/>
+                                        <rect key="frame" x="20.000000000000007" y="203.66666666666663" width="90.666666666666686" height="25.333333333333343"/>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-d2" userLabel="Dashed Line 2">
-                                        <rect key="frame" x="20" y="207" width="353" height="1"/>
-                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="20" y="245" width="353" height="1"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="S8-c014"/>
+                                        </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Wallet Balance" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-wbt">
-                                        <rect key="frame" x="20.000000000000007" y="228" width="104.66666666666669" height="19.666666666666657"/>
+                                        <rect key="frame" x="20.000000000000007" y="262" width="104.66666666666669" height="19.666666666666686"/>
                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
-                                        <color key="textColor" red="0.59199999999999997" green="0.59199999999999997" blue="0.58799999999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="0.00 USDT" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-wbv">
-                                        <rect key="frame" x="20.000000000000007" y="255.66666666666666" width="90.666666666666686" height="25.333333333333343"/>
+                                        <rect key="frame" x="20.000000000000007" y="289.66666666666663" width="90.666666666666686" height="25.333333333333314"/>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8-d3" userLabel="Dashed Line 3">
-                                        <rect key="frame" x="20" y="301" width="353" height="1"/>
-                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="20" y="331" width="353" height="1"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="S8-c015"/>
+                                        </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8-bb" userLabel="Buy Button">
-                                        <rect key="frame" x="96.666666666666686" y="326" width="200" height="50"/>
+                                        <rect key="frame" x="121.66666666666669" y="356" width="150" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="S8-c016"/>
+                                            <constraint firstAttribute="height" constant="50" id="S8-c017"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="16"/>
                                         <state key="normal" title="Buy NFT  →">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -792,73 +846,71 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="25"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="buyTapped:" destination="S8-vc" eventType="touchUpInside" id="S8-act001"/>
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="S8-li">
-                                        <rect key="frame" x="186.66666666666666" y="341" width="20" height="20"/>
+                                        <rect key="frame" x="186.66666666666666" y="371" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="wordWrap" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="S8-el">
-                                        <rect key="frame" x="20" y="388" width="353" height="0.0"/>
+                                        <rect key="frame" x="20" y="414" width="353" height="0.0"/>
                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
-                                        <color key="textColor" red="1" green="0.23100000000000001" blue="0.188" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="S8-gr" firstAttribute="top" secondItem="S8-sv" secondAttribute="top" constant="12" id="S8-c010"/>
-                                    <constraint firstItem="S8-gr" firstAttribute="centerX" secondItem="S8-sv" secondAttribute="centerX" id="S8-c011"/>
-                                    <constraint firstItem="S8-gr" firstAttribute="width" constant="40" id="S8-c012"/>
-                                    <constraint firstItem="S8-gr" firstAttribute="height" constant="5" id="S8-c013"/>
-                                    <constraint firstItem="S8-nt" firstAttribute="top" secondItem="S8-gr" secondAttribute="bottom" constant="20" id="S8-c014"/>
-                                    <constraint firstItem="S8-nt" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c015"/>
-                                    <constraint firstItem="S8-nt" firstAttribute="width" constant="56" id="S8-c016"/>
-                                    <constraint firstItem="S8-nt" firstAttribute="height" constant="56" id="S8-c017"/>
-                                    <constraint firstItem="S8-tl" firstAttribute="top" secondItem="S8-nt" secondAttribute="top" id="S8-c018"/>
-                                    <constraint firstItem="S8-tl" firstAttribute="leading" secondItem="S8-nt" secondAttribute="trailing" constant="12" id="S8-c019"/>
-                                    <constraint firstItem="S8-tl" firstAttribute="trailing" secondItem="S8-sv" secondAttribute="trailing" constant="-20" id="S8-c020"/>
-                                    <constraint firstItem="S8-cl" firstAttribute="top" secondItem="S8-tl" secondAttribute="bottom" constant="4" id="S8-c021"/>
-                                    <constraint firstItem="S8-cl" firstAttribute="leading" secondItem="S8-tl" secondAttribute="leading" id="S8-c022"/>
-                                    <constraint firstItem="S8-d1" firstAttribute="top" secondItem="S8-nt" secondAttribute="bottom" constant="20" id="S8-c023"/>
-                                    <constraint firstItem="S8-d1" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c024"/>
-                                    <constraint firstItem="S8-d1" firstAttribute="trailing" secondItem="S8-sv" secondAttribute="trailing" constant="-20" id="S8-c025"/>
-                                    <constraint firstItem="S8-d1" firstAttribute="height" constant="1" id="S8-c026"/>
-                                    <constraint firstItem="S8-bpt" firstAttribute="top" secondItem="S8-d1" secondAttribute="bottom" constant="20" id="S8-c027"/>
-                                    <constraint firstItem="S8-bpt" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c028"/>
-                                    <constraint firstItem="S8-bpv" firstAttribute="top" secondItem="S8-bpt" secondAttribute="bottom" constant="8" id="S8-c029"/>
-                                    <constraint firstItem="S8-bpv" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c030"/>
-                                    <constraint firstItem="S8-d2" firstAttribute="top" secondItem="S8-bpv" secondAttribute="bottom" constant="20" id="S8-c031"/>
-                                    <constraint firstItem="S8-d2" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c032"/>
-                                    <constraint firstItem="S8-d2" firstAttribute="trailing" secondItem="S8-sv" secondAttribute="trailing" constant="-20" id="S8-c033"/>
-                                    <constraint firstItem="S8-d2" firstAttribute="height" constant="1" id="S8-c034"/>
-                                    <constraint firstItem="S8-wbt" firstAttribute="top" secondItem="S8-d2" secondAttribute="bottom" constant="20" id="S8-c035"/>
-                                    <constraint firstItem="S8-wbt" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c036"/>
-                                    <constraint firstItem="S8-wbv" firstAttribute="top" secondItem="S8-wbt" secondAttribute="bottom" constant="8" id="S8-c037"/>
-                                    <constraint firstItem="S8-wbv" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c038"/>
-                                    <constraint firstItem="S8-d3" firstAttribute="top" secondItem="S8-wbv" secondAttribute="bottom" constant="20" id="S8-c039"/>
-                                    <constraint firstItem="S8-d3" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c040"/>
-                                    <constraint firstItem="S8-d3" firstAttribute="trailing" secondItem="S8-sv" secondAttribute="trailing" constant="-20" id="S8-c041"/>
-                                    <constraint firstItem="S8-d3" firstAttribute="height" constant="1" id="S8-c042"/>
-                                    <constraint firstItem="S8-bb" firstAttribute="top" secondItem="S8-d3" secondAttribute="bottom" constant="24" id="S8-c043"/>
-                                    <constraint firstItem="S8-bb" firstAttribute="centerX" secondItem="S8-sv" secondAttribute="centerX" id="S8-c044"/>
-                                    <constraint firstItem="S8-bb" firstAttribute="width" constant="200" id="S8-c045"/>
-                                    <constraint firstItem="S8-bb" firstAttribute="height" constant="50" id="S8-c046"/>
-                                    <constraint firstItem="S8-li" firstAttribute="centerX" secondItem="S8-bb" secondAttribute="centerX" id="S8-c047"/>
-                                    <constraint firstItem="S8-li" firstAttribute="centerY" secondItem="S8-bb" secondAttribute="centerY" id="S8-c048"/>
-                                    <constraint firstItem="S8-el" firstAttribute="top" secondItem="S8-bb" secondAttribute="bottom" constant="12" id="S8-c049"/>
-                                    <constraint firstItem="S8-el" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c050"/>
-                                    <constraint firstItem="S8-el" firstAttribute="trailing" secondItem="S8-sv" secondAttribute="trailing" constant="-20" id="S8-c051"/>
-                                    <constraint firstAttribute="bottom" secondItem="S8-el" secondAttribute="bottom" constant="24" id="S8-c052"/>
+                                    <constraint firstItem="S8-hv" firstAttribute="top" secondItem="S8-sv" secondAttribute="top" id="S8-c018"/>
+                                    <constraint firstItem="S8-hv" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" id="S8-c019"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-hv" secondAttribute="trailing" id="S8-c020"/>
+                                    <constraint firstItem="S8-sdiv" firstAttribute="top" secondItem="S8-hv" secondAttribute="bottom" id="S8-c021"/>
+                                    <constraint firstItem="S8-sdiv" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" id="S8-c022"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-sdiv" secondAttribute="trailing" id="S8-c023"/>
+                                    <constraint firstItem="S8-nt" firstAttribute="top" secondItem="S8-sdiv" secondAttribute="bottom" constant="20" id="S8-c024"/>
+                                    <constraint firstItem="S8-nt" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c025"/>
+                                    <constraint firstItem="S8-tl" firstAttribute="top" secondItem="S8-nt" secondAttribute="top" constant="6" id="S8-c026"/>
+                                    <constraint firstItem="S8-tl" firstAttribute="leading" secondItem="S8-nt" secondAttribute="trailing" constant="16" id="S8-c027"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-tl" secondAttribute="trailing" constant="20" id="S8-c028"/>
+                                    <constraint firstItem="S8-ci" firstAttribute="top" secondItem="S8-tl" secondAttribute="bottom" constant="4.3333333333333428" id="S8-c029"/>
+                                    <constraint firstItem="S8-ci" firstAttribute="leading" secondItem="S8-tl" secondAttribute="leading" id="S8-c030"/>
+                                    <constraint firstItem="S8-cl" firstAttribute="centerY" secondItem="S8-ci" secondAttribute="centerY" id="S8-c031"/>
+                                    <constraint firstItem="S8-cl" firstAttribute="leading" secondItem="S8-ci" secondAttribute="trailing" constant="4" id="S8-c032"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-cl" secondAttribute="trailing" constant="20" id="S8-c033"/>
+                                    <constraint firstItem="S8-d1" firstAttribute="top" secondItem="S8-nt" secondAttribute="bottom" constant="20" id="S8-c034"/>
+                                    <constraint firstItem="S8-d1" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c035"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-d1" secondAttribute="trailing" constant="20" id="S8-c036"/>
+                                    <constraint firstItem="S8-bpt" firstAttribute="top" secondItem="S8-d1" secondAttribute="bottom" constant="16" id="S8-c037"/>
+                                    <constraint firstItem="S8-bpt" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c038"/>
+                                    <constraint firstItem="S8-bpv" firstAttribute="top" secondItem="S8-bpt" secondAttribute="bottom" constant="8" id="S8-c039"/>
+                                    <constraint firstItem="S8-bpv" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c040"/>
+                                    <constraint firstItem="S8-d2" firstAttribute="top" secondItem="S8-bpv" secondAttribute="bottom" constant="16" id="S8-c041"/>
+                                    <constraint firstItem="S8-d2" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c042"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-d2" secondAttribute="trailing" constant="20" id="S8-c043"/>
+                                    <constraint firstItem="S8-wbt" firstAttribute="top" secondItem="S8-d2" secondAttribute="bottom" constant="16" id="S8-c044"/>
+                                    <constraint firstItem="S8-wbt" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c045"/>
+                                    <constraint firstItem="S8-wbv" firstAttribute="top" secondItem="S8-wbt" secondAttribute="bottom" constant="8" id="S8-c046"/>
+                                    <constraint firstItem="S8-wbv" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c047"/>
+                                    <constraint firstItem="S8-d3" firstAttribute="top" secondItem="S8-wbv" secondAttribute="bottom" constant="16" id="S8-c048"/>
+                                    <constraint firstItem="S8-d3" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c049"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-d3" secondAttribute="trailing" constant="20" id="S8-c050"/>
+                                    <constraint firstItem="S8-bb" firstAttribute="top" secondItem="S8-d3" secondAttribute="bottom" constant="24" id="S8-c051"/>
+                                    <constraint firstItem="S8-bb" firstAttribute="centerX" secondItem="S8-sv" secondAttribute="centerX" id="S8-c052"/>
+                                    <constraint firstItem="S8-li" firstAttribute="centerX" secondItem="S8-bb" secondAttribute="centerX" id="S8-c053"/>
+                                    <constraint firstItem="S8-li" firstAttribute="centerY" secondItem="S8-bb" secondAttribute="centerY" id="S8-c054"/>
+                                    <constraint firstItem="S8-el" firstAttribute="top" secondItem="S8-bb" secondAttribute="bottom" constant="8" id="S8-c055"/>
+                                    <constraint firstItem="S8-el" firstAttribute="leading" secondItem="S8-sv" secondAttribute="leading" constant="20" id="S8-c056"/>
+                                    <constraint firstAttribute="trailing" secondItem="S8-el" secondAttribute="trailing" constant="20" id="S8-c057"/>
+                                    <constraint firstAttribute="bottom" secondItem="S8-bb" secondAttribute="bottom" constant="52" id="S8-c058"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="24"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
@@ -871,16 +923,19 @@
                             <constraint firstItem="S8-dm" firstAttribute="bottom" secondItem="S8-vw" secondAttribute="bottom" id="S8-c103"/>
                             <constraint firstItem="S8-sv" firstAttribute="leading" secondItem="S8-vw" secondAttribute="leading" id="S8-c104"/>
                             <constraint firstItem="S8-sv" firstAttribute="trailing" secondItem="S8-vw" secondAttribute="trailing" id="S8-c105"/>
-                            <constraint firstItem="S8-sv" firstAttribute="bottom" secondItem="S8-vw" secondAttribute="bottom" id="S8-c106"/>
+                            <constraint firstAttribute="bottom" secondItem="S8-sv" secondAttribute="bottom" id="S8-c106"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="buyButton" destination="S8-bb" id="S8-out-006"/>
                         <outlet property="buyingPriceValueLabel" destination="S8-bpv" id="S8-out-004"/>
+                        <outlet property="closeButton" destination="S8-cb" id="S8-out-012"/>
+                        <outlet property="creatorNameLabel" destination="S8-cl" id="S8-out-013"/>
                         <outlet property="dashedLine1" destination="S8-d1" id="S8-out-009"/>
                         <outlet property="dashedLine2" destination="S8-d2" id="S8-out-010"/>
                         <outlet property="dashedLine3" destination="S8-d3" id="S8-out-011"/>
                         <outlet property="errorLabel" destination="S8-el" id="S8-out-008"/>
+                        <outlet property="headerTitleLabel" destination="S8-ht" id="S8-out-014"/>
                         <outlet property="loadingIndicator" destination="S8-li" id="S8-out-007"/>
                         <outlet property="nftThumbImageView" destination="S8-nt" id="S8-out-002"/>
                         <outlet property="nftTitleLabel" destination="S8-tl" id="S8-out-003"/>
@@ -902,42 +957,63 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-bk" userLabel="Back Button">
                                 <rect key="frame" x="16" y="126" width="44" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="‹">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.96470588235294119" green="0.98431372549019602" blue="0.90588235294117647" alpha="0.34999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="S9-bk-h"/>
+                                    <constraint firstAttribute="width" constant="44" id="S9-bk-w"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="chevron.left" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="medium"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="backTapped:" destination="S9-vc" eventType="touchUpInside" id="S9-act001"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create NFT" textAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-hl">
-                                <rect key="frame" x="141" y="134" width="111.33333333333331" height="28"/>
-                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="130.33333333333331" y="131.33333333333334" width="132.33333333333331" height="33.666666666666657"/>
+                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="24"/>
+                                <color key="textColor" red="0.066666666666666666" green="0.078431372549019607" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9-sv">
-                                <rect key="frame" x="0.0" y="170" width="393" height="682"/>
+                                <rect key="frame" x="0.0" y="178" width="393" height="674"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9-cv" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="677"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ip" userLabel="Image Picker">
-                                                <rect key="frame" x="16" y="16" width="361" height="200"/>
+                                                <rect key="frame" x="16" y="8" width="361" height="200"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ps" userLabel="Upload Placeholder">
-                                                        <rect key="frame" x="125" y="76.333333333333314" width="111.33333333333331" height="47.666666666666657"/>
+                                                        <rect key="frame" x="125" y="54.33333333333335" width="111.33333333333331" height="91.666666666666686"/>
                                                         <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="S9-uim">
+                                                                <rect key="frame" x="37.666666666666657" y="-1.6666666666666679" width="36" height="37.666666666666671"/>
+                                                                <color key="tintColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="36" id="S9-uim-h"/>
+                                                                    <constraint firstAttribute="width" constant="36" id="S9-uim-w"/>
+                                                                </constraints>
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="regular"/>
+                                                            </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload NFT" textAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ul">
-                                                                <rect key="frame" x="10" y="0.0" width="91" height="22.666666666666668"/>
+                                                                <rect key="frame" x="10" y="43.999999999999972" width="91" height="22.666666666666671"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="16"/>
-                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" red="0.090196078431372548" green="0.094117647058823528" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="( Type : png, jpeg )" textAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-us">
-                                                                <rect key="frame" x="0.0" y="30.666666666666686" width="111.33333333333333" height="17"/>
+                                                                <rect key="frame" x="0.0" y="74.666666666666657" width="111.33333333333333" height="17"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
-                                                                <color key="textColor" red="0.59199999999999997" green="0.59199999999999997" blue="0.58799999999999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -946,7 +1022,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="361" height="200"/>
                                                     </imageView>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="S9-ps" firstAttribute="centerX" secondItem="S9-ip" secondAttribute="centerX" id="S9-c010"/>
                                                     <constraint firstItem="S9-ps" firstAttribute="centerY" secondItem="S9-ip" secondAttribute="centerY" id="S9-c011"/>
@@ -954,60 +1030,70 @@
                                                     <constraint firstItem="S9-si" firstAttribute="leading" secondItem="S9-ip" secondAttribute="leading" id="S9-c013"/>
                                                     <constraint firstItem="S9-si" firstAttribute="trailing" secondItem="S9-ip" secondAttribute="trailing" id="S9-c014"/>
                                                     <constraint firstItem="S9-si" firstAttribute="bottom" secondItem="S9-ip" secondAttribute="bottom" id="S9-c015"/>
+                                                    <constraint firstAttribute="height" constant="200" id="S9-c103"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="16"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title *" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-tfl">
-                                                <rect key="frame" x="16" y="240" width="361" height="19.666666666666686"/>
+                                                <rect key="frame" x="16" y="228" width="361" height="19.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter the Nft name" translatesAutoresizingMaskIntoConstraints="NO" id="S9-tf">
-                                                <rect key="frame" x="16" y="267.66666666666669" width="361" height="50"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter the Nft name" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="S9-tf">
+                                                <rect key="frame" x="16" y="255.66666666666669" width="361" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="S9-c110"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
                                                     <action selector="titleFieldChanged:" destination="S9-vc" eventType="editingChanged" id="S9-act002"/>
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Description" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-dfl">
-                                                <rect key="frame" x="16" y="341.66666666666669" width="361" height="19.666666666666686"/>
+                                                <rect key="frame" x="16" y="323.66666666666669" width="361" height="19.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9-dtv">
-                                                <rect key="frame" x="16" y="369.33333333333337" width="361" height="100"/>
+                                                <rect key="frame" x="16" y="351.33333333333337" width="361" height="110"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="110" id="S9-c117"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Set Selling Price *" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-pfl">
-                                                <rect key="frame" x="16" y="493.33333333333337" width="361" height="19.666666666666629"/>
+                                                <rect key="frame" x="16" y="481.33333333333337" width="361" height="19.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9-pc" userLabel="Price Container">
-                                                <rect key="frame" x="16" y="521" width="361" height="50"/>
+                                                <rect key="frame" x="16" y="509" width="361" height="48"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter the amount" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ptf">
-                                                        <rect key="frame" x="12" y="14.666666666666629" width="277" height="21"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter the amount" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ptf">
+                                                        <rect key="frame" x="12" y="0.0" width="289" height="48"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                         <connections>
                                                             <action selector="priceFieldChanged:" destination="S9-vc" eventType="editingChanged" id="S9-act003"/>
                                                         </connections>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="USDT" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ul2">
-                                                        <rect key="frame" x="305" y="15.333333333333373" width="44" height="19.666666666666671"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USDT" textAlignment="right" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-ul2">
+                                                        <rect key="frame" x="309" y="14.333333333333373" width="40" height="19.666666666666671"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="40" id="S9-ul2-w"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -1016,27 +1102,32 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="S9-ptf" firstAttribute="leading" secondItem="S9-pc" secondAttribute="leading" constant="12" id="S9-c020"/>
-                                                    <constraint firstItem="S9-ptf" firstAttribute="centerY" secondItem="S9-pc" secondAttribute="centerY" id="S9-c021"/>
-                                                    <constraint firstItem="S9-ptf" firstAttribute="trailing" secondItem="S9-ul2" secondAttribute="leading" constant="-8" id="S9-c022"/>
-                                                    <constraint firstItem="S9-ul2" firstAttribute="trailing" secondItem="S9-pc" secondAttribute="trailing" constant="-12" id="S9-c023"/>
-                                                    <constraint firstItem="S9-ul2" firstAttribute="centerY" secondItem="S9-pc" secondAttribute="centerY" id="S9-c024"/>
+                                                    <constraint firstItem="S9-ptf" firstAttribute="top" secondItem="S9-pc" secondAttribute="top" id="S9-c021"/>
+                                                    <constraint firstItem="S9-ptf" firstAttribute="bottom" secondItem="S9-pc" secondAttribute="bottom" id="S9-c022"/>
+                                                    <constraint firstItem="S9-ptf" firstAttribute="trailing" secondItem="S9-ul2" secondAttribute="leading" constant="-8" id="S9-c023"/>
+                                                    <constraint firstItem="S9-ul2" firstAttribute="trailing" secondItem="S9-pc" secondAttribute="trailing" constant="-12" id="S9-c024"/>
+                                                    <constraint firstItem="S9-ul2" firstAttribute="centerY" secondItem="S9-pc" secondAttribute="centerY" id="S9-c025"/>
+                                                    <constraint firstAttribute="height" constant="48" id="S9-c124"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="wordWrap" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="S9-eb">
-                                                <rect key="frame" x="16" y="587" width="361" height="0.0"/>
+                                                <rect key="frame" x="16" y="569" width="361" height="0.0"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9-sb">
-                                                <rect key="frame" x="16" y="603" width="361" height="50"/>
+                                                <rect key="frame" x="16" y="581" width="361" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="S9-sb-h"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="16"/>
                                                 <state key="normal" title="Create NFT  →">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1045,51 +1136,47 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="25"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="submitTapped:" destination="S9-vc" eventType="touchUpInside" id="S9-act004"/>
                                                 </connections>
                                             </button>
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="S9-li">
-                                                <rect key="frame" x="186.66666666666666" y="618" width="20" height="20"/>
+                                                <rect key="frame" x="186.66666666666666" y="596" width="20" height="20"/>
+                                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="S9-ip" firstAttribute="top" secondItem="S9-cv" secondAttribute="top" constant="16" id="S9-c100"/>
+                                            <constraint firstItem="S9-ip" firstAttribute="top" secondItem="S9-cv" secondAttribute="top" constant="8" id="S9-c100"/>
                                             <constraint firstItem="S9-ip" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c101"/>
                                             <constraint firstItem="S9-ip" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c102"/>
-                                            <constraint firstItem="S9-ip" firstAttribute="height" constant="200" id="S9-c103"/>
-                                            <constraint firstItem="S9-tfl" firstAttribute="top" secondItem="S9-ip" secondAttribute="bottom" constant="24" id="S9-c104"/>
+                                            <constraint firstItem="S9-tfl" firstAttribute="top" secondItem="S9-ip" secondAttribute="bottom" constant="20" id="S9-c104"/>
                                             <constraint firstItem="S9-tfl" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c105"/>
                                             <constraint firstItem="S9-tfl" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c106"/>
                                             <constraint firstItem="S9-tf" firstAttribute="top" secondItem="S9-tfl" secondAttribute="bottom" constant="8" id="S9-c107"/>
                                             <constraint firstItem="S9-tf" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c108"/>
                                             <constraint firstItem="S9-tf" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c109"/>
-                                            <constraint firstItem="S9-tf" firstAttribute="height" constant="50" id="S9-c110"/>
-                                            <constraint firstItem="S9-dfl" firstAttribute="top" secondItem="S9-tf" secondAttribute="bottom" constant="24" id="S9-c111"/>
+                                            <constraint firstItem="S9-dfl" firstAttribute="top" secondItem="S9-tf" secondAttribute="bottom" constant="20" id="S9-c111"/>
                                             <constraint firstItem="S9-dfl" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c112"/>
                                             <constraint firstItem="S9-dfl" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c113"/>
                                             <constraint firstItem="S9-dtv" firstAttribute="top" secondItem="S9-dfl" secondAttribute="bottom" constant="8" id="S9-c114"/>
                                             <constraint firstItem="S9-dtv" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c115"/>
                                             <constraint firstItem="S9-dtv" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c116"/>
-                                            <constraint firstItem="S9-dtv" firstAttribute="height" constant="100" id="S9-c117"/>
-                                            <constraint firstItem="S9-pfl" firstAttribute="top" secondItem="S9-dtv" secondAttribute="bottom" constant="24" id="S9-c118"/>
+                                            <constraint firstItem="S9-pfl" firstAttribute="top" secondItem="S9-dtv" secondAttribute="bottom" constant="20" id="S9-c118"/>
                                             <constraint firstItem="S9-pfl" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c119"/>
                                             <constraint firstItem="S9-pfl" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c120"/>
                                             <constraint firstItem="S9-pc" firstAttribute="top" secondItem="S9-pfl" secondAttribute="bottom" constant="8" id="S9-c121"/>
                                             <constraint firstItem="S9-pc" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c122"/>
                                             <constraint firstItem="S9-pc" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c123"/>
-                                            <constraint firstItem="S9-pc" firstAttribute="height" constant="50" id="S9-c124"/>
-                                            <constraint firstItem="S9-eb" firstAttribute="top" secondItem="S9-pc" secondAttribute="bottom" constant="16" id="S9-c125"/>
+                                            <constraint firstItem="S9-eb" firstAttribute="top" secondItem="S9-pc" secondAttribute="bottom" constant="12" id="S9-c125"/>
                                             <constraint firstItem="S9-eb" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c126"/>
                                             <constraint firstItem="S9-eb" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c127"/>
-                                            <constraint firstItem="S9-sb" firstAttribute="top" secondItem="S9-eb" secondAttribute="bottom" constant="16" id="S9-c128"/>
+                                            <constraint firstItem="S9-sb" firstAttribute="top" secondItem="S9-eb" secondAttribute="bottom" constant="12" id="S9-c128"/>
                                             <constraint firstItem="S9-sb" firstAttribute="leading" secondItem="S9-cv" secondAttribute="leading" constant="16" id="S9-c129"/>
                                             <constraint firstItem="S9-sb" firstAttribute="trailing" secondItem="S9-cv" secondAttribute="trailing" constant="-16" id="S9-c130"/>
-                                            <constraint firstItem="S9-sb" firstAttribute="height" constant="50" id="S9-c131"/>
-                                            <constraint firstAttribute="bottom" secondItem="S9-sb" secondAttribute="bottom" constant="24" id="S9-c132"/>
+                                            <constraint firstAttribute="bottom" secondItem="S9-sb" secondAttribute="bottom" constant="32" id="S9-c132"/>
                                             <constraint firstItem="S9-li" firstAttribute="centerX" secondItem="S9-sb" secondAttribute="centerX" id="S9-c133"/>
                                             <constraint firstItem="S9-li" firstAttribute="centerY" secondItem="S9-sb" secondAttribute="centerY" id="S9-c134"/>
                                         </constraints>
@@ -1108,31 +1195,39 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="S9-sa"/>
-                        <color key="backgroundColor" red="0.97199999999999998" green="0.97199999999999998" blue="0.98399999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="S9-bk" firstAttribute="leading" secondItem="S9-vw" secondAttribute="leading" constant="16" id="S9-c300"/>
+                            <constraint firstItem="S9-bk" firstAttribute="leading" secondItem="S9-sa" secondAttribute="leading" constant="16" id="S9-c300"/>
                             <constraint firstItem="S9-bk" firstAttribute="top" secondItem="S9-sa" secondAttribute="top" constant="8" id="S9-c301"/>
-                            <constraint firstItem="S9-bk" firstAttribute="width" constant="44" id="S9-c302"/>
-                            <constraint firstItem="S9-bk" firstAttribute="height" constant="44" id="S9-c303"/>
                             <constraint firstItem="S9-hl" firstAttribute="centerX" secondItem="S9-vw" secondAttribute="centerX" id="S9-c304"/>
                             <constraint firstItem="S9-hl" firstAttribute="centerY" secondItem="S9-bk" secondAttribute="centerY" id="S9-c305"/>
-                            <constraint firstItem="S9-sv" firstAttribute="top" secondItem="S9-bk" secondAttribute="bottom" id="S9-c306"/>
+                            <constraint firstItem="S9-sv" firstAttribute="top" secondItem="S9-bk" secondAttribute="bottom" constant="8" id="S9-c306"/>
                             <constraint firstItem="S9-sv" firstAttribute="leading" secondItem="S9-vw" secondAttribute="leading" id="S9-c307"/>
                             <constraint firstItem="S9-sv" firstAttribute="trailing" secondItem="S9-vw" secondAttribute="trailing" id="S9-c308"/>
-                            <constraint firstItem="S9-sv" firstAttribute="bottom" secondItem="S9-vw" secondAttribute="bottom" id="S9-c309"/>
+                            <constraint firstAttribute="bottom" secondItem="S9-sv" secondAttribute="bottom" id="S9-c309"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="S9-bk" id="S9-out-011"/>
+                        <outlet property="currencyLabel" destination="S9-ul2" id="S9-out-015"/>
+                        <outlet property="descLabel" destination="S9-dfl" id="S9-out-013"/>
                         <outlet property="descTextView" destination="S9-dtv" id="S9-out-006"/>
                         <outlet property="errorBannerLabel" destination="S9-eb" id="S9-out-010"/>
+                        <outlet property="headerTitleLabel" destination="S9-hl" id="S9-out-012"/>
                         <outlet property="imagePickerContainer" destination="S9-ip" id="S9-out-002"/>
                         <outlet property="loadingIndicator" destination="S9-li" id="S9-out-009"/>
+                        <outlet property="priceContainerView" destination="S9-pc" id="S9-out-016"/>
+                        <outlet property="priceLabel" destination="S9-pfl" id="S9-out-014"/>
                         <outlet property="priceTextField" destination="S9-ptf" id="S9-out-007"/>
                         <outlet property="scrollView" destination="S9-sv" id="S9-out-001"/>
                         <outlet property="selectedImageView" destination="S9-si" id="S9-out-004"/>
                         <outlet property="submitButton" destination="S9-sb" id="S9-out-008"/>
+                        <outlet property="titleLabel" destination="S9-tfl" id="S9-out-017"/>
                         <outlet property="titleTextField" destination="S9-tf" id="S9-out-005"/>
+                        <outlet property="uploadIconImageView" destination="S9-uim" id="S9-out-018"/>
                         <outlet property="uploadPlaceholderStack" destination="S9-ps" id="S9-out-003"/>
+                        <outlet property="uploadSubtitleLabel" destination="S9-us" id="S9-out-020"/>
+                        <outlet property="uploadTitleLabel" destination="S9-ul" id="S9-out-019"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S9-fr" sceneMemberID="firstResponder"/>
@@ -1245,7 +1340,9 @@
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="personIcon" width="24" height="27"/>
-        <image name="profile" width="29" height="32"/>
+        <image name="personalImage" width="56" height="56"/>
         <image name="shareIcon" width="44" height="48"/>
+        <image name="square.and.arrow.up" catalog="system" width="110" height="128"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
     </resources>
 </document>

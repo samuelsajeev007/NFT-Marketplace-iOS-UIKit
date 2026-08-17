@@ -19,6 +19,7 @@ final class PurchaseViewModel {
     private(set) var isLoading: Bool = false
     private(set) var showSuccessModal: Bool = false
     private(set) var errorMessage: String?
+    var onPurchaseSuccess: (() -> Void)?
 
     var hasSufficientBalance: Bool {
         usdtBalance >= nft.price
@@ -34,11 +35,13 @@ final class PurchaseViewModel {
     init(
         nft: NFT,
         marketplaceRepository: MarketplaceRepositoryProtocol,
-        walletRepository: WalletRepositoryProtocol
+        walletRepository: WalletRepositoryProtocol,
+        onPurchaseSuccess: (() -> Void)? = nil
     ) {
         self.nft = nft
         self.marketplaceRepository = marketplaceRepository
         self.walletRepository = walletRepository
+        self.onPurchaseSuccess = onPurchaseSuccess
     }
 
     // MARK: - Actions
@@ -67,6 +70,7 @@ final class PurchaseViewModel {
                 userId: "user-001",
                 email:  "jane.cooper@example.com"
             )
+            onPurchaseSuccess?()
             showSuccessModal = true
         } catch {
             errorMessage = error.localizedDescription

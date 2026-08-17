@@ -15,17 +15,29 @@ extension UIImageView {
 
     // MARK: - Async Image Loading
 
-    /// Loads an image from a remote URL asynchronously.
+    /// Loads an image from a remote URL or local file URL asynchronously.
     /// Shows a spinner while loading and a placeholder SF symbol on failure.
     func loadImage(from url: URL?, placeholder: UIImage? = nil) {
         // Cancel any previous task
         cancelImageLoad()
 
+        guard let url = url else {
+            image = placeholder ?? UIImage(systemName: "photo")
+            tintColor = .systemGray3
+            return
+        }
+
+        // Fast path for local file URLs
+        if url.isFileURL {
+            if let data = try? Data(contentsOf: url), let loaded = UIImage(data: data) {
+                self.image = loaded
+                return
+            }
+        }
+
         // Show placeholder immediately
         image = placeholder ?? UIImage(systemName: "photo")
         tintColor = .systemGray3
-
-        guard let url = url else { return }
 
         let spinner = UIActivityIndicatorView(style: .medium)
         spinner.translatesAutoresizingMaskIntoConstraints = false

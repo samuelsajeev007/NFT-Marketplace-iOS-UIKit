@@ -14,7 +14,7 @@ final class MyNFTsViewController: UIViewController {
     // MARK: - Dependencies
 
     var viewModel: WalletViewModel!
-    var container: AppContainer!
+    var container: AppContainer = AppContainer()
 
     // MARK: - IBOutlets
 
@@ -36,6 +36,16 @@ final class MyNFTsViewController: UIViewController {
         startObserving()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let viewModel {
+            self.ownedNFTs = viewModel.ownedNFTs
+            self.collectionView?.reloadData()
+            self.emptyLabel?.isHidden = !viewModel.ownedNFTs.isEmpty
+            Task { await viewModel.loadWalletData() }
+        }
+    }
+
     deinit {
         observationTask?.cancel()
     }
@@ -43,6 +53,7 @@ final class MyNFTsViewController: UIViewController {
     // MARK: - Setup
 
     private func setupCollectionView() {
+        guard let collectionView else { return }
         collectionView.register(
             UINib(nibName: NFTCollectionViewCell.nibName, bundle: nil),
             forCellWithReuseIdentifier: NFTCollectionViewCell.reuseIdentifier
@@ -57,27 +68,37 @@ final class MyNFTsViewController: UIViewController {
     // MARK: - Observation
 
     private func startObserving() {
+        guard let viewModel else { return }
         observationTask = Task { @MainActor [weak self] in
-            guard let self else { return }
             while !Task.isCancelled {
-                withObservationTracking {
-                    let nfts      = self.viewModel.ownedNFTs
-                    let isLoading = self.viewModel.isLoading
+                guard let self, let viewModel = self.viewModel else { return }
+                await withCheckedContinuation { continuation in
+                    var hasResumed = false
+                    withObservationTracking {
+                        let nfts      = viewModel.ownedNFTs
+                        let isLoading = viewModel.isLoading
 
-                    if nfts != self.ownedNFTs {
-                        self.ownedNFTs = nfts
-                        self.collectionView.reloadData()
-                        self.emptyLabel.isHidden = !nfts.isEmpty
-                    }
+                        if nfts != self.ownedNFTs {
+                            self.ownedNFTs = nfts
+                            self.collectionView?.reloadData()
+                            self.emptyLabel?.isHidden = !nfts.isEmpty
+                        }
 
-                    if isLoading {
-                        self.loadingIndicator.startAnimating()
-                    } else {
-                        self.loadingIndicator.stopAnimating()
-                        self.refreshControl.endRefreshing()
+                        if isLoading {
+                            self.loadingIndicator?.startAnimating()
+                        } else {
+                            self.loadingIndicator?.stopAnimating()
+                            self.refreshControl.endRefreshing()
+                        }
+                    } onChange: {
+                        Task { @MainActor in
+                            if !hasResumed {
+                                hasResumed = true
+                                continuation.resume()
+                            }
+                        }
                     }
-                } onChange: {}
-                await Task.yield()
+                }
             }
         }
     }
@@ -85,7 +106,7 @@ final class MyNFTsViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func handleRefresh() {
-        Task { await viewModel.loadWalletData() }
+        Task { await viewModel?.loadWalletData() }
     }
 }
 
@@ -111,7 +132,7 @@ extension MyNFTsViewController: UICollectionViewDataSource {
 extension MyNFTsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nft = ownedNFTs[indexPath.item]
-        let detailVC = storyboard!.instantiateViewController(withIdentifier: "NFTDetailViewController") as! NFTDetailViewController
+        let detailVC = storyboard?.instantiateViewController(withIdentifier: "NFTDetailViewController") as? NFTDetailViewController ?? NFTDetailViewController()
         detailVC.nft = nft
         detailVC.container = container
         navigationController?.pushViewController(detailVC, animated: true)
@@ -127,7 +148,7 @@ extension MyNFTsViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let padding: CGFloat = 16 * 2 + 16
-        let width = (collectionView.bounds.width - padding) / 2
+        let width = max(100, (collectionView.bounds.width - padding) / 2)
         return CGSize(width: width, height: width + 52)
     }
 }

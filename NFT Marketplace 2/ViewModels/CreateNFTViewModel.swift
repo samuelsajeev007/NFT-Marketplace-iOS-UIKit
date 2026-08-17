@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Observation
 import UIKit
+import Observation
 
 @MainActor
 @Observable
@@ -18,17 +18,22 @@ final class CreateNFTViewModel {
     var title: String = ""
     var nftDescription: String = ""
     var sellingPrice: String = ""
-    var selectedImageData: Data?
     var selectedImage: UIImage?
+    var selectedImageData: Data?
 
-    // MARK: - UI State
+    // MARK: - Loading & Error State
 
     private(set) var isLoading: Bool = false
-    private(set) var showSuccessModal: Bool = false
     private(set) var errorMessage: String?
+    private(set) var showSuccessModal: Bool = false
+
+    // MARK: - Validation
 
     var isFormValid: Bool {
-        !title.isEmpty && !nftDescription.isEmpty && !sellingPrice.isEmpty && selectedImageData != nil
+        !title.trimmingCharacters(in: .whitespaces).isEmpty &&
+        !sellingPrice.trimmingCharacters(in: .whitespaces).isEmpty &&
+        (Decimal(string: sellingPrice.trimmingCharacters(in: .whitespaces)) ?? 0) > 0 &&
+        selectedImageData != nil
     }
 
     // MARK: - Dependencies
@@ -71,15 +76,30 @@ final class CreateNFTViewModel {
         showSuccessModal = false
     }
 
-    // MARK: - Image Handling
+    func resetForm() {
+        title = ""
+        nftDescription = ""
+        sellingPrice = ""
+        selectedImage = nil
+        selectedImageData = nil
+        errorMessage = nil
+        showSuccessModal = false
+    }
+
+    // MARK: - Image Handling & Compression
 
     func setImage(_ image: UIImage) {
+        // Multi-stage image compression to keep upload efficient & fast
         let resized = image.resized(toMaxDimension: 1024)
-        if let jpeg = resized.jpegData(compressionQuality: 0.7) {
-            selectedImageData = jpeg
-        } else {
-            selectedImageData = image.jpegData(compressionQuality: 0.7)
+        var quality: CGFloat = 0.7
+        var compressedData = resized.jpegData(compressionQuality: quality)
+
+        while let data = compressedData, data.count > 800 * 1024, quality > 0.3 {
+            quality -= 0.1
+            compressedData = resized.jpegData(compressionQuality: quality)
         }
+
+        selectedImageData = compressedData ?? image.jpegData(compressionQuality: 0.5)
         selectedImage = resized
     }
 }

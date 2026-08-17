@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - WalletRepositoryProtocol
 
+/// Contract for all wallet-related data operations strictly via API.
 protocol WalletRepositoryProtocol {
     func fetchBalances(userId: String, email: String) async throws -> [WalletBalance]
     func uploadNFT(
@@ -25,6 +26,7 @@ protocol WalletRepositoryProtocol {
 
 // MARK: - WalletRepository
 
+/// Pure API implementation of WalletRepositoryProtocol.
 final class WalletRepository: WalletRepositoryProtocol {
 
     private let networkService: NetworkServiceProtocol
@@ -34,18 +36,11 @@ final class WalletRepository: WalletRepositoryProtocol {
     }
 
     func fetchBalances(userId: String, email: String) async throws -> [WalletBalance] {
-        do {
-            let response = try await networkService.request(
-                endpoint: .walletBalances(userid: userId, email: email),
-                responseType: WalletBalanceResponse.self
-            )
-            if !response.coins.isEmpty {
-                return response.coins
-            }
-        } catch {
-            print("Remote balances error: \(error). Using fallback balances.")
-        }
-        return MockData.sampleBalances
+        let response = try await networkService.request(
+            endpoint: .walletBalances(userid: userId, email: email),
+            responseType: WalletBalanceResponse.self
+        )
+        return response.coins
     }
 
     func uploadNFT(
@@ -57,38 +52,25 @@ final class WalletRepository: WalletRepositoryProtocol {
         userId: String,
         email: String
     ) async throws {
-        do {
-            _ = try await networkService.request(
-                endpoint: .uploadNFT(
-                    imageData:   imageData,
-                    imageName:   imageName,
-                    title:       title,
-                    description: description,
-                    price:       price,
-                    userid:      userId,
-                    email:       email
-                ),
-                responseType: EmptyResponse.self
-            )
-            MockData.addOwnedNFT(title: title, description: description, price: Decimal(string: price) ?? 10.0, imageData: imageData)
-        } catch {
-            print("Remote upload error: \(error). Adding to local owned NFTs.")
-            MockData.addOwnedNFT(title: title, description: description, price: Decimal(string: price) ?? 10.0, imageData: imageData)
-        }
+        _ = try await networkService.request(
+            endpoint: .uploadNFT(
+                imageData:   imageData,
+                imageName:   imageName,
+                title:       title,
+                description: description,
+                price:       price,
+                userid:      userId,
+                email:       email
+            ),
+            responseType: EmptyResponse.self
+        )
     }
 
     func fetchOwnedNFTs(userId: String, email: String) async throws -> [NFT] {
-        do {
-            let response = try await networkService.request(
-                endpoint: .ownedNFTs(userid: userId, email: email),
-                responseType: NFTResponse.self
-            )
-            if !response.items.isEmpty {
-                return response.items
-            }
-        } catch {
-            print("Remote owned NFTs error: \(error). Using fallback owned dataset.")
-        }
-        return MockData.ownedNFTs
+        let response = try await networkService.request(
+            endpoint: .ownedNFTs(userid: userId, email: email),
+            responseType: NFTResponse.self
+        )
+        return response.items
     }
 }

@@ -63,6 +63,11 @@ final class WalletViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task { await viewModel?.loadWalletData() }
+    }
+
     // MARK: - Setup
 
     private func setupUI() {
@@ -89,12 +94,14 @@ final class WalletViewController: UIViewController {
         selectedWalletTab = .myNFTs
         updatePillSelection()
         showWalletTab(.myNFTs, animated: true)
+        Task { await viewModel?.loadWalletData() }
     }
 
     @IBAction func coinsButtonTapped(_ sender: UIButton) {
         selectedWalletTab = .coins
         updatePillSelection()
         showWalletTab(.coins, animated: true)
+        Task { await viewModel?.loadWalletData() }
     }
 
     @IBAction func createNFTButtonTapped(_ sender: UIButton) {

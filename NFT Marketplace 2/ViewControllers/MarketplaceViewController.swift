@@ -44,6 +44,14 @@ final class MarketplaceViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let viewModel, !viewModel.nfts.isEmpty {
+            self.nfts = viewModel.nfts
+            self.collectionView?.reloadData()
+        }
+    }
+
     deinit {
         observationTask?.cancel()
     }
@@ -69,25 +77,34 @@ final class MarketplaceViewController: UIViewController {
     private func startObserving() {
         guard let viewModel else { return }
         observationTask = Task { @MainActor [weak self] in
-            guard let self else { return }
             while !Task.isCancelled {
-                withObservationTracking {
-                    let newNFTs   = self.viewModel.nfts
-                    let isLoading = self.viewModel.isLoading
+                guard let self, let viewModel = self.viewModel else { return }
+                await withCheckedContinuation { continuation in
+                    var hasResumed = false
+                    withObservationTracking {
+                        let newNFTs   = viewModel.nfts
+                        let isLoading = viewModel.isLoading
 
-                    if newNFTs != self.nfts {
-                        self.nfts = newNFTs
-                        self.collectionView?.reloadData()
-                    }
+                        if newNFTs != self.nfts {
+                            self.nfts = newNFTs
+                            self.collectionView?.reloadData()
+                        }
 
-                    if isLoading {
-                        self.loadingIndicator?.startAnimating()
-                    } else {
-                        self.loadingIndicator?.stopAnimating()
-                        self.refreshControl.endRefreshing()
+                        if isLoading {
+                            self.loadingIndicator?.startAnimating()
+                        } else {
+                            self.loadingIndicator?.stopAnimating()
+                            self.refreshControl.endRefreshing()
+                        }
+                    } onChange: {
+                        Task { @MainActor in
+                            if !hasResumed {
+                                hasResumed = true
+                                continuation.resume()
+                            }
+                        }
                     }
-                } onChange: {}
-                await Task.yield()
+                }
             }
         }
     }

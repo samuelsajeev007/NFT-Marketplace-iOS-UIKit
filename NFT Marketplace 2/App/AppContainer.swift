@@ -50,7 +50,12 @@ final class AppContainer {
         return PurchaseViewModel(
             nft: nft,
             marketplaceRepository: self.marketplaceRepository,
-            walletRepository: self.walletRepository
+            walletRepository: self.walletRepository,
+            onPurchaseSuccess: { [weak self] in
+                Task {
+                    await self?.walletViewModel.loadWalletData()
+                }
+            }
         )
     }
 }

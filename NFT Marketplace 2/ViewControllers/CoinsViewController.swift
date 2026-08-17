@@ -34,6 +34,15 @@ final class CoinsViewController: UIViewController {
         startObserving()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let viewModel {
+            self.balances = viewModel.balances
+            self.tableView?.reloadData()
+            Task { await viewModel.loadWalletData() }
+        }
+    }
+
     deinit {
         observationTask?.cancel()
     }
@@ -41,6 +50,7 @@ final class CoinsViewController: UIViewController {
     // MARK: - Setup
 
     private func setupTableView() {
+        guard let tableView else { return }
         tableView.register(
             UINib(nibName: CoinCell.nibName, bundle: nil),
             forCellReuseIdentifier: CoinCell.reuseIdentifier
@@ -55,26 +65,36 @@ final class CoinsViewController: UIViewController {
     // MARK: - Observation
 
     private func startObserving() {
+        guard let viewModel else { return }
         observationTask = Task { @MainActor [weak self] in
-            guard let self else { return }
             while !Task.isCancelled {
-                withObservationTracking {
-                    let newBalances = self.viewModel.balances
-                    let isLoading   = self.viewModel.isLoading
+                guard let self, let viewModel = self.viewModel else { return }
+                await withCheckedContinuation { continuation in
+                    var hasResumed = false
+                    withObservationTracking {
+                        let newBalances = viewModel.balances
+                        let isLoading   = viewModel.isLoading
 
-                    if newBalances != self.balances {
-                        self.balances = newBalances
-                        self.tableView.reloadData()
-                    }
+                        if newBalances != self.balances {
+                            self.balances = newBalances
+                            self.tableView?.reloadData()
+                        }
 
-                    if isLoading {
-                        self.loadingIndicator.startAnimating()
-                    } else {
-                        self.loadingIndicator.stopAnimating()
-                        self.refreshControl.endRefreshing()
+                        if isLoading {
+                            self.loadingIndicator?.startAnimating()
+                        } else {
+                            self.loadingIndicator?.stopAnimating()
+                            self.refreshControl.endRefreshing()
+                        }
+                    } onChange: {
+                        Task { @MainActor in
+                            if !hasResumed {
+                                hasResumed = true
+                                continuation.resume()
+                            }
+                        }
                     }
-                } onChange: {}
-                await Task.yield()
+                }
             }
         }
     }
@@ -82,7 +102,7 @@ final class CoinsViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func handleRefresh() {
-        Task { await viewModel.loadWalletData() }
+        Task { await viewModel?.loadWalletData() }
     }
 }
 
