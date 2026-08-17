@@ -15,6 +15,7 @@ final class MyNFTsViewController: UIViewController {
 
     var viewModel: WalletViewModel!
     var container: AppContainer = AppContainer()
+    weak var coordinator: AppCoordinator?
 
     // MARK: - IBOutlets
 
@@ -132,10 +133,7 @@ extension MyNFTsViewController: UICollectionViewDataSource {
 extension MyNFTsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nft = ownedNFTs[indexPath.item]
-        let detailVC = storyboard?.instantiateViewController(withIdentifier: "NFTDetailViewController") as? NFTDetailViewController ?? NFTDetailViewController()
-        detailVC.nft = nft
-        detailVC.container = container
-        navigationController?.pushViewController(detailVC, animated: true)
+        coordinator?.navigate(to: .nftDetail(nft: nft))
     }
 }
 

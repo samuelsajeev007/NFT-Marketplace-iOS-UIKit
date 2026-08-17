@@ -11,6 +11,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    /// Application navigation coordinator.
+    var coordinator: AppCoordinator?
+
     /// Shared dependency container — lives for the lifetime of the scene.
     let container = AppContainer()
 
@@ -21,14 +24,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = scene as? UIWindowScene else { return }
 
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let navController = storyboard.instantiateInitialViewController() as? UINavigationController,
-              let homeVC = navController.topViewController as? HomeViewController else {
-            return
-        }
-
-        homeVC.container = container
-        navController.setNavigationBarHidden(true, animated: false)
+        let navController = UINavigationController()
+        let coordinator = AppCoordinator(navigationController: navController, container: container)
+        self.coordinator = coordinator
+        coordinator.start()
 
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = navController

@@ -15,6 +15,7 @@ final class CreateNFTViewController: UIViewController {
     // MARK: - Dependencies
 
     var viewModel: CreateNFTViewModel!
+    weak var coordinator: AppCoordinator?
 
     // MARK: - IBOutlets
 
@@ -336,7 +337,7 @@ final class CreateNFTViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func backTapped(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        coordinator?.pop()
     }
 
     @IBAction func titleFieldChanged(_ sender: UITextField) {
@@ -370,20 +371,18 @@ final class CreateNFTViewController: UIViewController {
     }
 
     private func showSuccessModal() {
-        let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessModalViewController") as? SuccessModalViewController ?? SuccessModalViewController()
-        successVC.titleText = "NFT Created Successfully!"
-        successVC.messageText = "Your NFT is now visible in the My NFTs tab"
-        successVC.buttonTitle = "View NFT"
-        successVC.showArrow = true
-        successVC.onAction = { [weak self] in
-            guard let self else { return }
-            self.viewModel?.dismissModal()
-            self.viewModel?.resetForm()
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        successVC.modalPresentationStyle = .overFullScreen
-        successVC.modalTransitionStyle = .crossDissolve
-        present(successVC, animated: true)
+        coordinator?.navigate(to: .successModal(
+            title: "NFT Created Successfully!",
+            message: "Your NFT is now visible in the My NFTs tab",
+            buttonTitle: "View NFT",
+            showArrow: true,
+            onAction: { [weak self] in
+                guard let self else { return }
+                self.viewModel?.dismissModal()
+                self.viewModel?.resetForm()
+                self.coordinator?.popToRoot()
+            }
+        ))
     }
 }
 

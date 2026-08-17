@@ -14,6 +14,7 @@ final class NFTDetailViewController: UIViewController {
 
     var nft: NFT!
     var container: AppContainer = AppContainer()
+    weak var coordinator: AppCoordinator?
 
     // MARK: - IBOutlets
 
@@ -166,17 +167,12 @@ final class NFTDetailViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func backTapped(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        coordinator?.pop()
     }
 
     @IBAction func buyButtonTapped(_ sender: UIButton) {
         guard let nft else { return }
-        let purchaseVM = container.makePurchaseViewModel(for: nft)
-        let purchaseVC = storyboard?.instantiateViewController(withIdentifier: "PurchaseConfirmationViewController") as? PurchaseConfirmationViewController ?? PurchaseConfirmationViewController()
-        purchaseVC.viewModel = purchaseVM
-        purchaseVC.modalPresentationStyle = .overFullScreen
-        purchaseVC.modalTransitionStyle = .coverVertical
-        present(purchaseVC, animated: true)
+        coordinator?.navigate(to: .purchaseConfirmation(nft: nft))
     }
 
     @IBAction func shareTapped(_ sender: UIButton) {

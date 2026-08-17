@@ -14,6 +14,7 @@ final class MarketplaceViewController: UIViewController {
     // MARK: - Dependencies
 
     var container: AppContainer = AppContainer()
+    weak var coordinator: AppCoordinator?
     var viewModel: MarketplaceViewModel!
 
     // MARK: - IBOutlets
@@ -144,10 +145,7 @@ extension MarketplaceViewController: UICollectionViewDataSource {
 extension MarketplaceViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nft = nfts[indexPath.item]
-        let detailVC = storyboard?.instantiateViewController(withIdentifier: "NFTDetailViewController") as? NFTDetailViewController ?? NFTDetailViewController()
-        detailVC.nft = nft
-        detailVC.container = container
-        navigationController?.pushViewController(detailVC, animated: true)
+        coordinator?.navigate(to: .nftDetail(nft: nft))
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

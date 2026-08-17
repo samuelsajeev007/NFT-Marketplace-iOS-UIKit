@@ -34,18 +34,24 @@ final class HomeViewController: UIViewController {
     private var lastDotSize: CGSize = .zero
     private var selectedTab: HomeTab = .marketplace
 
+    // MARK: - Navigation & Dependencies
+
+    weak var coordinator: AppCoordinator?
+
     // MARK: - Child VCs
 
     private lazy var marketplaceVC: MarketplaceViewController = {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "MarketplaceViewController") as? MarketplaceViewController ?? MarketplaceViewController()
+        let vc: MarketplaceViewController = coordinator?.makeChild(.marketplace) ?? MarketplaceViewController()
         vc.container = self.container
+        vc.coordinator = self.coordinator
         vc.viewModel = self.container.marketplaceViewModel
         return vc
     }()
 
     private lazy var walletVC: WalletViewController = {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "WalletViewController") as? WalletViewController ?? WalletViewController()
+        let vc: WalletViewController = coordinator?.makeChild(.wallet) ?? WalletViewController()
         vc.container = self.container
+        vc.coordinator = self.coordinator
         vc.viewModel = self.container.walletViewModel
         return vc
     }()

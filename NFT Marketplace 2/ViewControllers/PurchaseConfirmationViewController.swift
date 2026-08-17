@@ -14,6 +14,7 @@ final class PurchaseConfirmationViewController: UIViewController {
     // MARK: - Dependencies
 
     var viewModel: PurchaseViewModel!
+    weak var coordinator: AppCoordinator?
 
     // MARK: - IBOutlets
 
@@ -247,20 +248,13 @@ final class PurchaseConfirmationViewController: UIViewController {
     }
 
     private func showSuccessModal() {
-        guard let presentingVC = self.presentingViewController else { return }
-        self.dismiss(animated: false) {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let successVC = storyboard.instantiateViewController(withIdentifier: "SuccessModalViewController") as? SuccessModalViewController else { return }
-            successVC.titleText = "Purchase Successful!"
-            successVC.messageText = "View it anytime in My NFTs."
-            successVC.buttonTitle = "Close"
-            successVC.showArrow = false
-            successVC.onAction = {
-                successVC.dismiss(animated: true)
-            }
-            successVC.modalPresentationStyle = .overFullScreen
-            successVC.modalTransitionStyle = .crossDissolve
-            presentingVC.present(successVC, animated: true)
+        dismiss(animated: false) { [weak self] in
+            self?.coordinator?.navigate(to: .successModal(
+                title: "Purchase Successful!",
+                message: "View it anytime in My NFTs.",
+                buttonTitle: "Close",
+                showArrow: false
+            ))
         }
     }
 }

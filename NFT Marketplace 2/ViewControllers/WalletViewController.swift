@@ -15,6 +15,7 @@ final class WalletViewController: UIViewController {
     // MARK: - Dependencies
 
     var container: AppContainer = AppContainer()
+    weak var coordinator: AppCoordinator?
     var viewModel: WalletViewModel!
 
     // MARK: - IBOutlets
@@ -32,14 +33,15 @@ final class WalletViewController: UIViewController {
     // MARK: - Child VCs
 
     private lazy var myNFTsVC: MyNFTsViewController = {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "MyNFTsViewController") as? MyNFTsViewController ?? MyNFTsViewController()
+        let vc: MyNFTsViewController = coordinator?.makeChild(.myNFTs) ?? MyNFTsViewController()
         vc.viewModel = self.viewModel
         vc.container = self.container
+        vc.coordinator = self.coordinator
         return vc
     }()
 
     private lazy var coinsVC: CoinsViewController = {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "CoinsViewController") as? CoinsViewController ?? CoinsViewController()
+        let vc: CoinsViewController = coordinator?.makeChild(.coins) ?? CoinsViewController()
         vc.viewModel = self.viewModel
         return vc
     }()
@@ -105,9 +107,7 @@ final class WalletViewController: UIViewController {
     }
 
     @IBAction func createNFTButtonTapped(_ sender: UIButton) {
-        let createVC = storyboard?.instantiateViewController(withIdentifier: "CreateNFTViewController") as? CreateNFTViewController ?? CreateNFTViewController()
-        createVC.viewModel = container.createNFTViewModel
-        navigationController?.pushViewController(createVC, animated: true)
+        coordinator?.navigate(to: .createNFT)
     }
 
     // MARK: - Helpers
