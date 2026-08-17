@@ -50,8 +50,11 @@ final class PurchaseConfirmationViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if let buyButton {
+            let radius = buyButton.bounds.height / 2
             buyButtonGradientLayer.frame = buyButton.bounds
-            buyButton.layer.cornerRadius = buyButton.bounds.height / 2
+            buyButtonGradientLayer.cornerRadius = radius
+            buyButton.layer.cornerRadius = radius
+            buyButton.clipsToBounds = true
         }
 
         // Draw dashed lines
@@ -95,23 +98,39 @@ final class PurchaseConfirmationViewController: UIViewController {
         creatorNameLabel?.font = UIFont(name: "Poppins-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14)
         creatorNameLabel?.textColor = UIColor(red: 151/255.0, green: 151/255.0, blue: 150/255.0, alpha: 1.0)
 
-        buyingPriceValueLabel?.font = UIFont(name: "Poppins-SemiBold", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
+        buyingPriceValueLabel?.font = UIFont(name: "Poppins-Regular", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
         buyingPriceValueLabel?.textColor = .black
 
-        walletBalanceValueLabel?.font = UIFont(name: "Poppins-SemiBold", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
+        walletBalanceValueLabel?.font = UIFont(name: "Poppins-Regular", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
 
-        buyButton?.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.boldSystemFont(ofSize: 16)
         errorLabel?.font = UIFont(name: "Poppins-Regular", size: 12) ?? UIFont.systemFont(ofSize: 12)
 
-        // Buy button gradient
+        // Buy button styling
         if let buyButton {
+            var config = UIButton.Configuration.plain()
+            config.cornerStyle = .capsule
+            config.baseForegroundColor = .white
+            config.baseBackgroundColor = .clear
+            let arrowImg = UIImage(named: "sideArrow") ?? UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold))
+            config.image = arrowImg?.withRenderingMode(.alwaysTemplate)
+            config.imagePlacement = .trailing
+            config.imagePadding = 10
+            var titleAttr = AttributedString("Buy NFT")
+            titleAttr.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+            titleAttr.foregroundColor = .white
+            config.attributedTitle = titleAttr
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            buyButton.configuration = config
+
             buyButtonGradientLayer.colors = [
                 UIColor(red: 58/255.0, green: 108/255.0, blue: 244/255.0, alpha: 1.0).cgColor,
                 UIColor(red: 14/255.0, green: 195/255.0, blue: 244/255.0, alpha: 1.0).cgColor
             ]
             buyButtonGradientLayer.startPoint = CGPoint(x: 0, y: 0)
             buyButtonGradientLayer.endPoint = CGPoint(x: 1, y: 1)
-            buyButton.layer.insertSublayer(buyButtonGradientLayer, at: 0)
+            if buyButtonGradientLayer.superlayer == nil {
+                buyButton.layer.insertSublayer(buyButtonGradientLayer, at: 0)
+            }
             buyButton.clipsToBounds = true
         }
 
@@ -169,10 +188,20 @@ final class PurchaseConfirmationViewController: UIViewController {
 
                         if isLoading {
                             self.loadingIndicator?.startAnimating()
-                            self.buyButton?.setTitle("", for: .normal)
+                            var config = self.buyButton?.configuration
+                            config?.attributedTitle = nil
+                            config?.image = nil
+                            self.buyButton?.configuration = config
                         } else {
                             self.loadingIndicator?.stopAnimating()
-                            self.buyButton?.setTitle("Buy NFT  →", for: .normal)
+                            var config = self.buyButton?.configuration
+                            var titleAttr = AttributedString("Buy NFT")
+                            titleAttr.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+                            titleAttr.foregroundColor = .white
+                            config?.attributedTitle = titleAttr
+                            let arrowImg = UIImage(named: "sideArrow") ?? UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold))
+                            config?.image = arrowImg?.withRenderingMode(.alwaysTemplate)
+                            self.buyButton?.configuration = config
                         }
 
                         if let error {

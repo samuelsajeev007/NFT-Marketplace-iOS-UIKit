@@ -111,8 +111,14 @@ final class MarketplaceViewController: UIViewController {
 
     // MARK: - Actions
 
+    func refreshData() {
+        Task { [weak self] in
+            await self?.viewModel?.loadNFTs()
+        }
+    }
+
     @objc private func handleRefresh() {
-        Task { await viewModel?.loadNFTs() }
+        refreshData()
     }
 }
 

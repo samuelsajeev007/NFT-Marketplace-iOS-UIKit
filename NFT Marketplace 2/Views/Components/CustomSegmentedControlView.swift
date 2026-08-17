@@ -77,7 +77,10 @@ final class CustomSegmentedControlView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         // Indicator
-        indicatorView.backgroundColor = UIColor(red: 51/255, green: 137/255, blue: 251/255, alpha: 1)
+        indicatorView.backgroundColor = UIColor(red: 51/255.0, green: 137/255.0, blue: 251/255.0, alpha: 1.0)
+        indicatorView.layer.cornerRadius = 3
+        indicatorView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        indicatorView.clipsToBounds = true
         addSubview(indicatorView)
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -117,21 +120,28 @@ final class CustomSegmentedControlView: UIView {
     private var indicatorLeading: NSLayoutConstraint?
     private var indicatorWidth: NSLayoutConstraint?
     private var indicatorSetup = false
+    private let indicatorInset: CGFloat = 16
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        if !indicatorSetup && bounds.width > 0 {
+        guard bounds.width > 0 else { return }
+        let segWidth = bounds.width / CGFloat(max(HomeTab.allCases.count, 1))
+        let targetX = (CGFloat(selectedTab.rawValue) * segWidth) + indicatorInset
+        let targetW = max(0, segWidth - (indicatorInset * 2))
+        if !indicatorSetup {
             indicatorSetup = true
-            let segWidth = bounds.width / CGFloat(HomeTab.allCases.count)
-            indicatorLeading = indicatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(selectedTab.rawValue) * segWidth)
-            indicatorWidth   = indicatorView.widthAnchor.constraint(equalToConstant: segWidth)
+            indicatorLeading = indicatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: targetX)
+            indicatorWidth   = indicatorView.widthAnchor.constraint(equalToConstant: targetW)
             NSLayoutConstraint.activate([indicatorLeading!, indicatorWidth!])
+        } else {
+            indicatorWidth?.constant = targetW
+            indicatorLeading?.constant = targetX
         }
     }
 
     private func updateSelection(animated: Bool) {
         let segWidth = bounds.width / CGFloat(max(HomeTab.allCases.count, 1))
-        let targetX = CGFloat(selectedTab.rawValue) * segWidth
+        let targetX = (CGFloat(selectedTab.rawValue) * segWidth) + indicatorInset
 
         let update = {
             self.indicatorLeading?.constant = targetX

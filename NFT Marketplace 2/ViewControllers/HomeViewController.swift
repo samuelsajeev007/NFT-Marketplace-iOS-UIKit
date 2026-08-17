@@ -57,6 +57,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        updateTabUI(animated: false)
         showTab(.marketplace, animated: false)
     }
 
@@ -124,7 +125,10 @@ final class HomeViewController: UIViewController {
         // Tab button fonts & indicator
         marketplaceButton?.titleLabel?.font = UIFont(name: "SofiaProSemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
         walletsButton?.titleLabel?.font = UIFont(name: "SofiaProMedium", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .medium)
-        indicatorView?.backgroundColor = .techbankBlue
+        indicatorView?.layer.cornerRadius = 3
+        indicatorView?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        indicatorView?.clipsToBounds = true
+        indicatorView?.backgroundColor = UIColor(red: 51/255.0, green: 137/255.0, blue: 251/255.0, alpha: 1.0)
     }
 
     private func applyLogoGradient() {
@@ -167,6 +171,10 @@ final class HomeViewController: UIViewController {
         selectedTab = tab
         updateTabUI(animated: true)
         showTab(tab, animated: true)
+
+        if tab == .marketplace {
+            marketplaceVC.refreshData()
+        }
     }
 
     private func updateTabUI(animated: Bool) {
@@ -174,7 +182,10 @@ final class HomeViewController: UIViewController {
         marketplaceButton?.titleLabel?.font = UIFont(name: isMarketplace ? "SofiaProSemiBold" : "SofiaProMedium", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: isMarketplace ? .semibold : .medium)
         walletsButton?.titleLabel?.font = UIFont(name: isMarketplace ? "SofiaProMedium" : "SofiaProSemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: isMarketplace ? .medium : .semibold)
 
-        let targetLeading: CGFloat = isMarketplace ? 0 : (view.bounds.width / 2.0)
+        let inset: CGFloat = 16
+        let segmentControlWidth = indicatorView?.superview?.bounds.width ?? view.bounds.width
+        let tabWidth = segmentControlWidth > 0 ? segmentControlWidth / 2.0 : (view.bounds.width / 2.0)
+        let targetLeading: CGFloat = (isMarketplace ? 0 : tabWidth) + inset
         indicatorLeadingConstraint?.constant = targetLeading
 
         if animated {

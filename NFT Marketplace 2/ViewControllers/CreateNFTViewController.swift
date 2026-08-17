@@ -62,8 +62,11 @@ final class CreateNFTViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if let submitButton {
+            let radius = submitButton.bounds.height / 2
             submitButtonGradientLayer.frame = submitButton.bounds
-            submitButton.layer.cornerRadius = submitButton.bounds.height / 2
+            submitButtonGradientLayer.cornerRadius = radius
+            submitButton.layer.cornerRadius = radius
+            submitButton.clipsToBounds = true
         }
         if let backButton {
             backButton.layer.cornerRadius = backButton.bounds.height / 2
@@ -105,7 +108,7 @@ final class CreateNFTViewController: UIViewController {
 
         if let uploadIconImageView {
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 32, weight: .regular)
-            uploadIconImageView.image = UIImage(systemName: "square.and.arrow.up", withConfiguration: symbolConfig)
+            uploadIconImageView.image = UIImage(named: "uploadIcon")
             uploadIconImageView.tintColor = UIColor(red: 142/255.0, green: 142/255.0, blue: 147/255.0, alpha: 1.0)
         }
 
@@ -194,14 +197,30 @@ final class CreateNFTViewController: UIViewController {
 
         // Submit Button
         if let submitButton {
-            submitButton.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.boldSystemFont(ofSize: 16)
+            var config = UIButton.Configuration.plain()
+            config.cornerStyle = .capsule
+            config.baseForegroundColor = .white
+            config.baseBackgroundColor = .clear
+            let arrowImg = UIImage(named: "sideArrow") ?? UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold))
+            config.image = arrowImg?.withRenderingMode(.alwaysTemplate)
+            config.imagePlacement = .trailing
+            config.imagePadding = 10
+            var titleAttr = AttributedString("Create NFT")
+            titleAttr.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+            titleAttr.foregroundColor = .white
+            config.attributedTitle = titleAttr
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            submitButton.configuration = config
+
             submitButtonGradientLayer.colors = [
                 UIColor(red: 58/255.0, green: 108/255.0, blue: 244/255.0, alpha: 1.0).cgColor,
                 UIColor(red: 14/255.0, green: 195/255.0, blue: 244/255.0, alpha: 1.0).cgColor
             ]
             submitButtonGradientLayer.startPoint = CGPoint(x: 0, y: 0)
             submitButtonGradientLayer.endPoint = CGPoint(x: 1, y: 1)
-            submitButton.layer.insertSublayer(submitButtonGradientLayer, at: 0)
+            if submitButtonGradientLayer.superlayer == nil {
+                submitButton.layer.insertSublayer(submitButtonGradientLayer, at: 0)
+            }
             submitButton.clipsToBounds = true
         }
 
@@ -251,10 +270,20 @@ final class CreateNFTViewController: UIViewController {
 
                         if isLoading {
                             self.loadingIndicator?.startAnimating()
-                            self.submitButton?.setTitle("", for: .normal)
+                            var config = self.submitButton?.configuration
+                            config?.attributedTitle = nil
+                            config?.image = nil
+                            self.submitButton?.configuration = config
                         } else {
                             self.loadingIndicator?.stopAnimating()
-                            self.submitButton?.setTitle("Create NFT  →", for: .normal)
+                            var config = self.submitButton?.configuration
+                            var titleAttr = AttributedString("Create NFT")
+                            titleAttr.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+                            titleAttr.foregroundColor = .white
+                            config?.attributedTitle = titleAttr
+                            let arrowImg = UIImage(named: "sideArrow") ?? UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold))
+                            config?.image = arrowImg?.withRenderingMode(.alwaysTemplate)
+                            self.submitButton?.configuration = config
                         }
                         self.submitButton?.isEnabled = isValid && !isLoading
                         self.submitButton?.alpha = (isValid && !isLoading) ? 1.0 : 0.5
@@ -332,16 +361,13 @@ final class CreateNFTViewController: UIViewController {
         let successVC = storyboard?.instantiateViewController(withIdentifier: "SuccessModalViewController") as? SuccessModalViewController ?? SuccessModalViewController()
         successVC.titleText = "NFT Created Successfully!"
         successVC.messageText = "Your NFT is now visible in the My NFTs tab"
-        successVC.buttonTitle = "Close"
-        successVC.showArrow = false
+        successVC.buttonTitle = "View NFT"
+        successVC.showArrow = true
         successVC.onAction = { [weak self] in
             guard let self else { return }
             self.viewModel?.dismissModal()
             self.viewModel?.resetForm()
-            successVC.dismiss(animated: true) {
-                // Navigate back to the HomeScreen
-                self.navigationController?.popToRootViewController(animated: true)
-            }
+            self.navigationController?.popToRootViewController(animated: true)
         }
         successVC.modalPresentationStyle = .overFullScreen
         successVC.modalTransitionStyle = .crossDissolve

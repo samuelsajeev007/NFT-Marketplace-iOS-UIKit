@@ -28,6 +28,7 @@ final class NFTDetailViewController: UIViewController {
     @IBOutlet weak var buyButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var dashedDividerView: UIView!
 
     // MARK: - Layers
 
@@ -45,8 +46,14 @@ final class NFTDetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if let buyButton {
+            let radius = buyButton.bounds.height / 2
             buyButtonGradientLayer.frame = buyButton.bounds
-            buyButton.layer.cornerRadius = buyButton.bounds.height / 2
+            buyButtonGradientLayer.cornerRadius = radius
+            buyButton.layer.cornerRadius = radius
+            buyButton.clipsToBounds = true
+        }
+        if let dashedDividerView {
+            drawDashedLine(on: dashedDividerView)
         }
     }
 
@@ -83,14 +90,30 @@ final class NFTDetailViewController: UIViewController {
 
         // Buy button styling
         if let buyButton {
-            buyButton.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+            var config = UIButton.Configuration.plain()
+            config.cornerStyle = .capsule
+            config.baseForegroundColor = .white
+            config.baseBackgroundColor = .clear
+            let arrowImg = UIImage(named: "sideArrow") ?? UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold))
+            config.image = arrowImg?.withRenderingMode(.alwaysTemplate)
+            config.imagePlacement = .trailing
+            config.imagePadding = 10
+            var titleAttr = AttributedString("Buy NFT")
+            titleAttr.font = UIFont(name: "Poppins-SemiBold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+            titleAttr.foregroundColor = .white
+            config.attributedTitle = titleAttr
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            buyButton.configuration = config
+
             buyButtonGradientLayer.colors = [
                 UIColor(red: 58/255.0, green: 108/255.0, blue: 244/255.0, alpha: 1.0).cgColor,
                 UIColor(red: 14/255.0, green: 195/255.0, blue: 244/255.0, alpha: 1.0).cgColor
             ]
             buyButtonGradientLayer.startPoint = CGPoint(x: 0, y: 0)
             buyButtonGradientLayer.endPoint = CGPoint(x: 1, y: 1)
-            buyButton.layer.insertSublayer(buyButtonGradientLayer, at: 0)
+            if buyButtonGradientLayer.superlayer == nil {
+                buyButton.layer.insertSublayer(buyButtonGradientLayer, at: 0)
+            }
             buyButton.clipsToBounds = true
         }
 
@@ -108,6 +131,27 @@ final class NFTDetailViewController: UIViewController {
             shareButton.setImage(shareImg, for: .normal)
             shareButton.tintColor = .black
         }
+    }
+
+    // MARK: - Dashed Line Drawing
+
+    private func drawDashedLine(on targetView: UIView) {
+        guard targetView.bounds.width > 0 else { return }
+        targetView.backgroundColor = .clear
+        targetView.layer.sublayers?.removeAll(where: { $0 is CAShapeLayer })
+
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.strokeColor = UIColor(red: 151/255.0, green: 151/255.0, blue: 150/255.0, alpha: 0.35).cgColor
+        shapeLayer.lineWidth = 1
+        shapeLayer.lineDashPattern = [4, 4]
+
+        let path = CGMutablePath()
+        path.addLines(between: [
+            CGPoint(x: 0, y: 0.5),
+            CGPoint(x: targetView.bounds.width, y: 0.5)
+        ])
+        shapeLayer.path = path
+        targetView.layer.addSublayer(shapeLayer)
     }
 
     private func configure() {
